@@ -5,11 +5,11 @@ plugins {
 
 android {
     namespace = "com.bpareja.pomodorotec"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.bpareja.pomodorotec"
-        minSdk = 29
+        minSdk = 33
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -83,4 +83,6 @@ dependencies {
     // Core KTX*
 
     implementation ("androidx.core:core-ktx:1.10.1")
+
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.5")
 }
