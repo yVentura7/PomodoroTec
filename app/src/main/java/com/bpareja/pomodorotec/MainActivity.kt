@@ -8,30 +8,12 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.bpareja.pomodorotec.pomodoro.PomodoroScreen
 import com.bpareja.pomodorotec.pomodoro.PomodoroViewModel
-import com.bpareja.pomodorotec.ui.theme.PomodoroTecTheme
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.work.Worker
-import androidx.work.WorkerParameters
-import java.util.concurrent.TimeUnit
+
 
 class MainActivity : ComponentActivity() {
 
@@ -45,12 +27,10 @@ class MainActivity : ComponentActivity() {
         }
         // Crear el canal de notificaciones
         createNotificationChannel()
-
-        // Programar las notificaciones en segundo plano
-
         // Solicitar permiso para notificaciones en Android 13+
-        //requestNotificationPermission()
-    }
+        requestNotificationPermission()
+
+        }
 
 
     private fun createNotificationChannel() {
