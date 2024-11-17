@@ -92,7 +92,7 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
     }
 
     // Muestra la notificación
-    private fun showNotification(title: String, message: String) {
+    private fun showNotification(title: String, message: String, repeatCount: Int = 2) {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
@@ -108,15 +108,24 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
-        with(NotificationManagerCompat.from(context)) {
-            if (ActivityCompat.checkSelfPermission(
-                    context,
-                    android.Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return
+        // Verifica permiso antes de enviar la notificación
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                android.Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+
+        // Enviar notificación repetida
+        val notificationManager = NotificationManagerCompat.from(context)
+        repeat(repeatCount) { attempt ->
+            notificationManager.notify(MainActivity.NOTIFICATION_ID + attempt, builder.build())
+
+            // Pausa entre repeticiones (ejemplo: 1 segundo entre notificaciones)
+            if (attempt < repeatCount - 1) {
+                Thread.sleep(1000) // Retraso de 1 segundo (no recomendado en UI thread)
             }
-            notify(MainActivity.NOTIFICATION_ID, builder.build())
         }
     }
 }
